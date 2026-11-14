@@ -1,0 +1,208 @@
+:root {
+  --accent: #f0d95a;
+  --scene-ink: #fff;
+  --traveler-light: .9;
+  --ease: cubic-bezier(.22, 1, .28, 1);
+  color-scheme: dark;
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #1c2b37; }
+body { color: #fff; -webkit-font-smoothing: antialiased; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+button:disabled { cursor: wait; }
+button { touch-action: manipulation; }
+[hidden] { display: none !important; }
+.experience { position: relative; isolation: isolate; height: 100svh; width: 100%; min-height: 0; overflow: hidden; }
+.landscapes, .landscape, .atmosphere, .ambient-light, .grain { position: absolute; inset: 0; pointer-events: none; }
+.landscapes { z-index: 0; overflow: hidden; }
+.landscape { opacity: 0; background-position: center; background-size: cover; background-repeat: no-repeat; }
+.landscape.active { opacity: 1; }
+/* The reveal and the final landscape share the exact same image geometry. */
+.reveal-layer { position: absolute; inset: 0; z-index: 12; pointer-events: none; overflow: hidden; will-change: clip-path; }
+.reveal-image { position: absolute; inset: 0; background: center / cover no-repeat; transform-origin: 50% 50%; will-change: transform; }
+.atmosphere { z-index: 14; background: linear-gradient(180deg, #08132338 0%, transparent 23%, transparent 64%, #0b13234d 79%, #080f1bd4 100%); }
+.ambient-light { z-index: 14; background: radial-gradient(ellipse at 0% 76%, #7a83e530, transparent 30%); mix-blend-mode: screen; }
+.ambient-light::after { content: ''; position: absolute; inset: 47% -15% 35%; background: radial-gradient(ellipse, #e4efff12, transparent 65%); animation: mist 25s ease-in-out infinite alternate; }
+.grain { z-index: 50; opacity: .025; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath filter='url(%23n)' opacity='.6' d='M0 0h160v160H0z'/%3E%3C/svg%3E"); }
+.site-header { position: absolute; z-index: 40; inset: 3.8% 5.3% auto; display: flex; align-items: center; justify-content: space-between; }
+.brand { color: #fff; text-decoration: none; display: flex; gap: 10px; align-items: center; }
+.brand svg { width: 31px; height: 32px; fill: none; stroke: #f0d95a; stroke-width: 1.3; }
+.brand span { font-size: 8px; font-weight: 500; letter-spacing: 2.3px; line-height: 1.5; }
+.brand strong { display: block; font-size: 12px; letter-spacing: 2.9px; font-weight: 600; }
+.edition { display: flex; gap: 15px; align-items: center; font-size: 8px; letter-spacing: 2.4px; opacity: .65; }
+.edition i { width: 23px; height: 1px; background: #ffffff66; }
+.reset { display: flex; align-items: center; gap: 20px; background: transparent; border: 0; padding: 8px 0 8px 8px; }
+.reset span { font-size: 7px; letter-spacing: 1.5px; opacity: .6; }
+.reset svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1; transition: transform .4s; }
+.reset:hover svg { transform: rotate(90deg); }
+.current-place { position: absolute; z-index: 35; top: 12.5%; left: 5.6%; display: flex; gap: 20px; align-items: stretch; }
+.place-rule { width: 2px; background: #f1d64d; margin: 3px 0; box-shadow: 0 0 10px #f1d64d22; }
+.eyebrow { display: block; margin-bottom: 8px; font-size: 6px; letter-spacing: 2.2px; opacity: .6; }
+.current-place h1 { font-family: 'Arial Narrow', 'Bahnschrift Condensed', Impact, sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(21px, 2vw, 34px); line-height: 1.03; letter-spacing: 1.5px; margin: 0; transform: scaleX(.75); transform-origin: left center; }
+.intro { position: absolute; z-index: 18; top: 36%; left: 10%; right: 10%; text-align: center; color: var(--scene-ink); opacity: 0; pointer-events: none; transition: color 1s; }
+.story-location { font-size: 8px; letter-spacing: 3px; margin: 0 0 16px; opacity: .7; }
+.scene-title { font-size: clamp(30px, 4.3vw, 76px); font-weight: 300; line-height: 1.12; letter-spacing: -2px; margin: 0; }
+.scene-title strong { font-weight: 700; }
+.story-note { font-size: 9px; letter-spacing: 2px; margin-top: 15px; opacity: .6; }
+.card-window { position: absolute; z-index: 20; inset: 0; pointer-events: none; touch-action: pan-y; }
+.card-track { position: absolute; inset: 0; perspective: 1600px; }
+.destination { position: absolute; top: 19%; left: 0; width: clamp(238px, 28vw, 430px); height: 47%; border: 1px solid #ffffff36; border-radius: 5px; padding: 0; background: transparent; text-align: left; isolation: isolate; overflow: hidden; pointer-events: auto; transform-origin: center; will-change: transform, opacity; box-shadow: 0 15px 55px #0a16201c; transition: border-color .4s, box-shadow .4s; }
+.destination:hover { border-color: #ffffff9c; box-shadow: 0 20px 65px #06152240; }
+.destination.active { border-color: #fff9; }
+.card-art { position: absolute; inset: 0; background: center / cover no-repeat; opacity: .94; transition: opacity .5s, filter .7s; }
+/* A soft transparent foot connects each destination to the live road. */
+.card-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #ffffff0a 0%, transparent 65%, #e4edf347 100%); }
+.destination:hover .card-art { opacity: 1; filter: brightness(1.07); }
+.card-top { position: absolute; top: 9%; left: 10%; right: 10%; display: flex; align-items: center; justify-content: space-between; }
+.orb { width: 32px; height: 32px; border-radius: 50%; background: var(--image) 43% 40% / auto 200%; box-shadow: inset -7px -3px 9px #070f2399, inset 1px 1px 3px #ffffff60, 0 2px 5px #15253330; }
+.card-number { font-size: 7px; letter-spacing: 2px; color: var(--card-ink); opacity: .65; }
+.card-info { position: absolute; top: 32%; left: 10%; right: 8%; color: var(--card-ink); }
+.card-info h2 { margin: 0 0 15px; font-family: 'Arial Narrow', 'Bahnschrift Condensed', Impact, sans-serif; font-weight: 400; font-size: clamp(36px, 3.5vw, 61px); text-transform: uppercase; letter-spacing: 1.5px; line-height: .98; transform: scaleX(.69); transform-origin: left; width: 140%; }
+.card-info h2 span { display: block; }
+.card-info p { font-family: 'Arial Narrow', Impact, sans-serif; font-size: clamp(8px, .72vw, 11px); text-transform: uppercase; letter-spacing: .5px; margin: 0; font-weight: 600; }
+.card-bottom { position: absolute; left: 10%; right: 10%; bottom: 7%; display: flex; justify-content: space-between; align-items: center; font-size: 6px; letter-spacing: 1.7px; color: var(--card-ink); opacity: .75; }
+.card-bottom b { font-size: 19px; font-weight: 300; }
+.traveler { position: absolute; z-index: 30; height: 34%; bottom: 17.7%; left: 50%; transform: translateX(-50%); pointer-events: none; animation: traveler-arrival 1.8s var(--ease) both; }
+.traveler img { display: block; position: relative; height: 100%; width: auto; filter: brightness(var(--traveler-light)) saturate(.82); transition: filter 1.1s ease; }
+.traveler-shadow { position: absolute; bottom: -1%; left: 35%; width: 30%; height: 5%; border-radius: 50%; background: #060b12b0; filter: blur(5px); transform: skewX(-15deg); box-shadow: 0 12px 12px #070d1455; }
+.journey-tools { position: absolute; z-index: 40; left: 5.6%; bottom: 24.5%; display: flex; align-items: center; gap: 20px; }
+.browse-toggle { display: flex; align-items: center; gap: 12px; border: 0; background: none; padding: 0; }
+.browse-toggle>svg { height: 43px; width: 43px; padding: 13px; border-radius: 50%; background: var(--accent); fill: none; stroke: #18202a; stroke-width: 1.3; transition: background 1s, transform .5s; }
+.browse-toggle:hover>svg { transform: rotate(90deg); }
+.browse-toggle>span { font-size: 7px; letter-spacing: 1.7px; }
+.tools-divider { width: 1px; height: 15px; background: #ffffff30; }
+.travel-mode { display: flex; align-items: center; gap: 9px; opacity: .55; }
+.travel-mode svg { width: 19px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.1; }
+.travel-mode span { font-size: 6px; letter-spacing: 1.5px; }
+.journey-footer { position: absolute; z-index: 40; bottom: 6.6%; left: 6%; right: 5.6%; display: flex; align-items: flex-end; justify-content: space-between; }
+.metrics { display: flex; gap: clamp(45px, 8vw, 150px); align-items: flex-end; }
+.metric>svg { display: block; width: clamp(110px, 12vw, 180px); height: 60px; fill: none; stroke: #f2f2e9bc; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.route-tip { fill: #f2f2e9; stroke: none; }
+.metric>div { display: flex; align-items: baseline; gap: 4px; margin-top: 6px; }
+.metric strong { font-family: 'Arial Narrow', 'Bahnschrift Condensed', sans-serif; font-stretch: condensed; font-weight: 300; font-size: clamp(25px, 2.7vw, 44px); line-height: 1; letter-spacing: -.8px; }
+.metric small { align-self: flex-start; margin-top: 3px; font-size: 8px; }
+.metric-label { display: block; font-size: 6px; letter-spacing: 1.5px; opacity: .4; margin-top: 9px; }
+.route-preview { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.terrain-orb { width: 65px; height: 65px; border-radius: 50%; background: url('../assets/images/patagonia.png') 50% 62% / auto 180%; box-shadow: inset -7px -4px 16px #070f2355; }
+.route-preview>span { font-size: 6px; letter-spacing: 1.5px; opacity: .55; }
+.navigation { display: flex; flex-direction: column; align-items: flex-end; gap: 17px; padding-bottom: 1px; }
+.destination-dots { display: flex; gap: 6px; }
+.destination-dots button { border: 0; width: 28px; height: 24px; display: grid; place-items: center; background: transparent; padding: 6px; }
+.destination-dots button::after { content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; background: #ffffff60; transition: width .5s, background .5s; }
+.destination-dots button[aria-current='true']::after { width: 20px; height: 2px; border-radius: 0; background: var(--accent); }
+.nav-row { display: flex; align-items: center; gap: 18px; }
+.nav-row>button { background: #ffffff06; border: 1px solid #ffffff4a; border-radius: 50%; width: 38px; height: 38px; font-size: 19px; transition: background .3s, color .3s; }
+.nav-row>button:hover { background: #f0d95a; border-color: #f0d95a; color: #172432; }
+.counter { display: flex; align-items: center; gap: 9px; font-size: 8px; letter-spacing: 1px; color: #ffffff60; }
+.counter>span { color: #fff; }
+.counter i { width: 35px; height: 1px; background: #ffffff4a; }
+.bottom-line { position: absolute; z-index: 40; bottom: 2.4%; left: 6%; right: 5.6%; display: flex; justify-content: space-between; font-size: 5px; letter-spacing: 1.8px; color: #ffffff55; }
+.interaction-hint { color: #ffffff90; }
+.interaction-hint b { margin-left: 10px; font-size: 10px; font-weight: 400; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.asset-error { position: absolute; z-index: 60; bottom: 0; padding: 12px; margin: 0; background: #142231; color: #fff; font-size: 12px; }
+.experience[data-view='browse'] .intro { opacity: 0; }
+.experience[data-view='immersed'] .intro { opacity: 1; }
+.experience[data-view='opening'] .destination { pointer-events: none; }
+@keyframes traveler-arrival { from { opacity: 0; transform: translateX(-50%) scale(1.025); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
+@keyframes mist { to { transform: translateX(6%); opacity: .5; } }
+@media (min-width: 1800px) { .destination { width: 27vw; } }
+@media (max-width: 1000px) {
+  .edition { display: none; }
+  .destination { width: 29vw; min-width: 220px; }
+  .card-info h2 { font-size: 44px; }
+  .current-place { top: 12%; }
+  .metrics { gap: 6vw; }
+  .metric>svg { height: 48px; width: 110px; }
+  .route-preview { display: none; }
+  .travel-mode span { display: none; }
+  .scene-title { font-size: 5.2vw; }
+  .journey-tools { bottom: 25%; }
+}
+@media (max-width: 600px) {
+  .experience { min-height: 0; }
+  .site-header { inset: 3% 6% auto; }
+  .brand svg { width: 25px; }
+  .brand span { font-size: 6px; }
+  .brand strong { font-size: 10px; }
+  .reset span { display: none; }
+  .current-place { left: 6%; top: 12%; gap: 12px; }
+  .eyebrow { font-size: 5px; margin-bottom: 7px; }
+  .current-place h1 { font-size: 26px; }
+  .destination { width: 58vw; min-width: 0; top: 23%; height: 39%; }
+  .card-info h2 { font-size: 43px; }
+  .card-info { top: 32%; }
+  .card-info p { font-size: 8px; }
+  .orb { width: 27px; height: 27px; }
+  .card-top { top: 8%; }
+  .card-bottom { font-size: 5px; letter-spacing: 1px; }
+  .traveler { height: 29%; bottom: 21%; }
+  .intro { top: 34%; left: 5%; right: 5%; }
+  .scene-title { font-size: clamp(27px, 7.5vw, 44px); letter-spacing: -1px; }
+  .story-location { font-size: 6px; letter-spacing: 2px; }
+  .story-note { font-size: 7px; letter-spacing: 1px; }
+  .journey-tools { left: 6%; bottom: 27%; gap: 10px; }
+  .browse-toggle { gap: 8px; }
+  .browse-toggle>svg { width: 36px; height: 36px; padding: 11px; }
+  .browse-toggle>span { display: none; }
+  .travel-mode, .tools-divider { display: none; }
+  .journey-footer { bottom: 8%; left: 6%; right: 6%; }
+  .metrics { gap: 22px; }
+  .metric>svg { width: 85px; height: 38px; }
+  .metric strong { font-size: 29px; }
+  .metric small { font-size: 6px; }
+  .metric-label { font-size: 4px; letter-spacing: .8px; max-width: 90px; }
+  .navigation { gap: 8px; }
+  .nav-row { gap: 8px; }
+  .nav-row>button { width: 32px; height: 32px; font-size: 17px; }
+  .counter { gap: 4px; font-size: 7px; }
+  .counter i { width: 10px; }
+  .destination-dots { gap: 0; }
+  .destination-dots button { width: 24px; }
+  .bottom-line { font-size: 4px; letter-spacing: 1px; bottom: 3%; }
+  .bottom-line>span:last-child { display: none; }
+}
+@media (max-height: 600px) and (min-width: 601px) {
+  .site-header { top: 3%; }
+  .current-place { top: 14%; }
+  .eyebrow { display: none; }
+  .current-place h1 { font-size: 23px; }
+  .destination { top: 19%; height: 45%; }
+  .card-info h2 { font-size: 34px; margin-bottom: 9px; }
+  .card-top { top: 6%; }
+  .orb { width: 23px; height: 23px; }
+  .journey-tools { bottom: 24%; }
+  .browse-toggle>svg { height: 30px; width: 30px; padding: 9px; }
+  .metric>svg { height: 35px; }
+  .metric strong { font-size: 26px; }
+  .route-preview { display: none; }
+  .journey-footer { bottom: 6%; }
+  .navigation { gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .traveler { opacity: 1; }
+}
+/* Destination-specific veils preserve the light, photographic reference cards. */
+.destination[data-destination='patagonia'] .card-art::after { background: linear-gradient(180deg, transparent 12%, #edf2f163 36%, #edf2f181 63%, #e9eeef63 100%); }
+.destination[data-destination='tundra'] .card-art::after { background: linear-gradient(180deg, #d5f4ff0a, #c8f0ff45 48%, #d5e8ed57); }
+.destination[data-destination='arctic'] .card-art::after { background: linear-gradient(180deg, #11172b08, #14172d22 45%, #eec3d236); }
+.destination[data-destination='vulcan'] .card-art::after { background: linear-gradient(180deg, #ffcfdf08, #ffd8b338 45%, #ebcdd153); }
+
+@media (max-height: 480px) {
+  .experience .destination { top: 20%; height: 44%; }
+  .experience .card-info h2 { font-size: 28px; margin-bottom: 7px; }
+  .experience .card-bottom { display: none; }
+  .experience .metric>svg { height: 25px; }
+  .experience .metric-label { margin-top: 4px; }
+  .experience .metric strong { font-size: 23px; }
+  .experience .journey-tools { bottom: 24%; }
+  .experience .story-location, .experience .story-note { display: none; }
+  .experience .scene-title { font-size: 36px; }
+  .experience .current-place { top: 15%; }
+  .experience .current-place h1 { font-size: 20px; }
+  .experience .eyebrow { display: none; }
+}

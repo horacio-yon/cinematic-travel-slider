@@ -1,0 +1,74 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#192735">
+  <meta name="description" content="Four roads beyond the ordinary. Explore a cinematic collection of wilderness expeditions by Codea con Horacio.">
+  <title>Wild routes — Codea con Horacio</title>
+  <link rel="preload" as="image" href="assets/images/patagonia.png">
+  <link rel="preload" as="image" href="assets/images/traveler.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main class="experience" data-view="browse" data-destination="patagonia" aria-label="Cinematic expedition explorer">
+    <div class="landscapes" aria-hidden="true"></div>
+    <div class="reveal-layer" aria-hidden="true" hidden><div class="reveal-image"></div></div>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="ambient-light" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Codea con Horacio home">
+        <svg viewBox="0 0 40 36" aria-hidden="true"><path d="M2 31 17 5l8 14 5-9 9 21H2Zm10 0 13-12"/></svg>
+        <span>CODEA CON<strong>HORACIO</strong></span>
+      </a>
+      <span class="edition">WILD ROUTES <i></i> VOL. 01 / 2026</span>
+      <button class="reset" aria-label="Return to Patagonia"><span>BACK TO THE BEGINNING</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+    </header>
+
+    <section class="current-place" aria-label="Current destination">
+      <span class="place-rule"></span>
+      <div><span class="eyebrow">THE CURRENT EXPEDITION</span><h1 id="place">Patagonia<br>Express</h1></div>
+    </section>
+
+    <section class="intro" aria-label="Destination story">
+      <p class="story-location" id="location">TIERRA DEL FUEGO, CHILE</p>
+      <h2 class="scene-title"><span>Hiking the</span> <strong>Glaciers</strong></h2>
+      <p class="story-note">Some roads take you further.</p>
+    </section>
+
+    <section class="card-window" id="destinations" aria-label="Choose a destination">
+      <div class="card-track"></div>
+    </section>
+
+    <div class="traveler" aria-hidden="true">
+      <span class="traveler-shadow"></span>
+      <img src="assets/images/traveler.png" width="1024" height="1536" alt="" draggable="false">
+    </div>
+
+    <div class="journey-tools">
+      <button class="browse-toggle" aria-controls="destinations" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></svg><span>EXPLORE DESTINATIONS</span></button>
+      <span class="tools-divider"></span>
+      <span class="travel-mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="14" cy="4" r="2"/><path d="m10 9 3-2 3 6 4 1M13 8l-3 7-5 5m5-5 5 2 1 5M9 9l-4 5M5 7 3 12"/></svg><span>ON FOOT. OFF GRID.</span></span>
+    </div>
+
+    <footer class="journey-footer">
+      <div class="metrics" aria-label="Expedition statistics">
+        <div class="metric route-metric"><svg class="route-drawing" viewBox="0 0 160 65" aria-hidden="true"><path d="m7 45 19 12 20-8-12-16 16-6 16 9 23-24 28 1-15 17 22-5 28-21-61 7-3 10-18 2-16 13-17-1-6 8-15-2Z"/><path class="route-tip" d="m72 8 7 3-6 5Z"/></svg><div><strong id="distance">20.5</strong><small>KM</small></div><span class="metric-label">DISTANCE TO DISCOVER</span></div>
+        <div class="metric elevation-metric"><svg class="elevation-drawing" viewBox="0 0 160 65" aria-hidden="true"><path d="m5 55 24-8 15 3 14-12 21 4 14-11 19 8 19-22 20-11"/><path class="route-tip" d="m5 36 8 0-4 8Z"/></svg><div><strong id="elevation">950</strong><small>M</small></div><span class="metric-label">ABOVE THE EVERYDAY</span></div>
+        <div class="route-preview"><div class="terrain-orb"></div><span id="duration">14 DAYS IN THE WILD</span></div>
+      </div>
+      <nav class="navigation" aria-label="Destination navigation">
+        <div class="destination-dots" aria-label="Choose destination"></div>
+        <div class="nav-row"><button class="previous" aria-label="Previous destination">←</button><span class="counter"><span id="index">01</span><i></i>04</span><button class="next" aria-label="Next destination">→</button></div>
+      </nav>
+    </footer>
+    <div class="bottom-line"><span>LEAVE THE ORDINARY BEHIND.</span><span class="interaction-hint">DRAG TO EXPLORE <b>↔</b></span><span>AN EXPLORATION BY HORACIO</span></div>
+    <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
+    <p class="asset-error" role="alert" hidden>One of the landscapes could not load. Please keep the assets folder beside index.html.</p>
+    <noscript><p class="asset-error">Enable JavaScript to explore the destinations.</p></noscript>
+  </main>
+</body>
+</html>
