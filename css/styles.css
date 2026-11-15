@@ -48,10 +48,11 @@ button { touch-action: manipulation; }
 .scene-title strong { font-weight: 700; }
 .story-note { font-size: 9px; letter-spacing: 2px; margin-top: 15px; opacity: .6; }
 .card-window { position: absolute; z-index: 20; inset: 0; pointer-events: none; touch-action: pan-y; }
-.card-track { position: absolute; inset: 0; perspective: 1600px; }
+.card-track { position: absolute; inset: 0; perspective: 1600px; will-change: transform; }
 .destination { position: absolute; top: 19%; left: 0; width: clamp(238px, 28vw, 430px); height: 47%; border: 1px solid #ffffff36; border-radius: 5px; padding: 0; background: transparent; text-align: left; isolation: isolate; overflow: hidden; pointer-events: auto; transform-origin: center; will-change: transform, opacity; box-shadow: 0 15px 55px #0a16201c; transition: border-color .4s, box-shadow .4s; }
 .destination:hover { border-color: #ffffff9c; box-shadow: 0 20px 65px #06152240; }
 .destination.active { border-color: #fff9; }
+.destination.active .card-art { opacity: 1; }
 .card-art { position: absolute; inset: 0; background: center / cover no-repeat; opacity: .94; transition: opacity .5s, filter .7s; }
 /* A soft transparent foot connects each destination to the live road. */
 .card-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #ffffff0a 0%, transparent 65%, #e4edf347 100%); }
@@ -69,9 +70,10 @@ button { touch-action: manipulation; }
 .traveler img { display: block; position: relative; height: 100%; width: auto; filter: brightness(var(--traveler-light)) saturate(.82); transition: filter 1.1s ease; }
 .traveler-shadow { position: absolute; bottom: -1%; left: 35%; width: 30%; height: 5%; border-radius: 50%; background: #060b12b0; filter: blur(5px); transform: skewX(-15deg); box-shadow: 0 12px 12px #070d1455; }
 .journey-tools { position: absolute; z-index: 40; left: 5.6%; bottom: 24.5%; display: flex; align-items: center; gap: 20px; }
-.browse-toggle { display: flex; align-items: center; gap: 12px; border: 0; background: none; padding: 0; }
+.browse-toggle { position: relative; display: flex; align-items: center; gap: 12px; border: 0; background: none; padding: 0; }
 .browse-toggle>svg { height: 43px; width: 43px; padding: 13px; border-radius: 50%; background: var(--accent); fill: none; stroke: #18202a; stroke-width: 1.3; transition: background 1s, transform .5s; }
 .browse-toggle:hover>svg { transform: rotate(90deg); }
+.browse-toggle:disabled { opacity: .65; }
 .browse-toggle>span { font-size: 7px; letter-spacing: 1.7px; }
 .tools-divider { width: 1px; height: 15px; background: #ffffff30; }
 .travel-mode { display: flex; align-items: center; gap: 9px; opacity: .55; }
@@ -106,7 +108,7 @@ button { touch-action: manipulation; }
 .asset-error { position: absolute; z-index: 60; bottom: 0; padding: 12px; margin: 0; background: #142231; color: #fff; font-size: 12px; }
 .experience[data-view='browse'] .intro { opacity: 0; }
 .experience[data-view='immersed'] .intro { opacity: 1; }
-.experience[data-view='opening'] .destination { pointer-events: none; }
+.experience[data-view='entering'] .destination { pointer-events: none !important; }
 @keyframes traveler-arrival { from { opacity: 0; transform: translateX(-50%) scale(1.025); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
 @keyframes mist { to { transform: translateX(6%); opacity: .5; } }
 @media (min-width: 1800px) { .destination { width: 27vw; } }
@@ -147,7 +149,7 @@ button { touch-action: manipulation; }
   .journey-tools { left: 6%; bottom: 27%; gap: 10px; }
   .browse-toggle { gap: 8px; }
   .browse-toggle>svg { width: 36px; height: 36px; padding: 11px; }
-  .browse-toggle>span { display: none; }
+  .browse-toggle>span { display: block; position: absolute; top: calc(100% + 7px); left: 0; width: 110px; text-align: left; font-size: 6px; letter-spacing: 1px; line-height: 1.6; }
   .travel-mode, .tools-divider { display: none; }
   .journey-footer { bottom: 8%; left: 6%; right: 6%; }
   .metrics { gap: 22px; }
